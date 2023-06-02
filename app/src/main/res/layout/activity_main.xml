@@ -6,13 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/Add_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/Edit_tittle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter ToDo Tittle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/Add_button"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/Add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="ADD"
+        app:layout_constraintBottom_toBottomOf="@+id/Edit_tittle"
+        app:layout_constraintEnd_toStartOf="@+id/Del_button" />
+
+    <Button
+        android:id="@+id/Del_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="DELETE DONE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
