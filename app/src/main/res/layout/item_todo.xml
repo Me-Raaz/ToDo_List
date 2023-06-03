@@ -9,19 +9,19 @@
 
 
     <TextView
-        android:id="@+id/Todo_view"
+        android:id="@+id/tvTodoTittle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Example"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/checkBox2"
+        app:layout_constraintEnd_toStartOf="@+id/cbDone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <CheckBox
-        android:id="@+id/checkBox2"
+        android:id="@+id/cbDone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
