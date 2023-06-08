@@ -16,6 +16,9 @@ object TodoItemContract {
         const val TABLE_NAME = "entry"
         const val COLUMN_NAME_TITLE = "title"
         const val COLUMN_NAME_IS_CHECKED = "isChecked"
+
+        const val ITEM_CHECKED = 1
+        const val ITEM_UNCHECKED = 0
     }
 
 }

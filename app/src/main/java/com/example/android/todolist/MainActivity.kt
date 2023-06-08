@@ -4,10 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.todolist.R.id.Edit_tittle
+import com.example.android.todolist.database.TodoItemContract
 import com.example.android.todolist.database.TodoItemStore
 import com.example.android.todolist.database.TodoListItem
 
@@ -19,7 +19,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val store = TodoItemStore(this)
-        todoAdapter = TodoAdapter(mutableListOf())
+        todoAdapter = TodoAdapter(mutableListOf()) {
+            item : Todo, isChecked : Boolean->
+            store.updateCheckStatus(TodoListItem.fromTodo(item), isChecked)
+        }
 
 
         val recyclerView = findViewById<RecyclerView>(R.id.rvTodoItems)
@@ -36,15 +39,16 @@ class MainActivity : AppCompatActivity() {
                 val todo = Todo(todoTitle)
                 todoAdapter.addTodo(todo)
                 Edit_tittle.text.clear()
-                store.storeTodoItem(TodoListItem(title = todoTitle, 0))
+                store.storeTodoItem(TodoListItem(title = todoTitle, TodoItemContract.TodoItem.ITEM_UNCHECKED))
             }
         }
         Del_button.setOnClickListener {
             todoAdapter.deleteDoneTodo()
+            store.deleteCompletedItems()
         }
         val allItems = store.queryAllData()
         for (item in allItems) {
-            todoAdapter.addTodo(Todo(item.title))
+            todoAdapter.addTodo(TodoListItem.toTodo(item))
         }
 
     }

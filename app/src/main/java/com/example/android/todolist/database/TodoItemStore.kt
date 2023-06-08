@@ -59,12 +59,37 @@ class TodoItemStore(private val context: Context) {
         return itemIds
     }
 
-    fun deleteTodoItem(item: TodoListItem) {
-        //TODO implement it
+
+    fun deleteCompletedItems() {
+        // Define 'where' part of query.
+        val selection = "${TodoItemContract.TodoItem.COLUMN_NAME_IS_CHECKED} LIKE ?"
+        // Specify arguments in placeholder order.
+        val selectionArgs = arrayOf(TodoItemContract.TodoItem.ITEM_CHECKED.toString())
+        // Issue SQL statement.
+        val deletedRows = dbReadable.delete(
+            TodoItemContract.TodoItem.TABLE_NAME,
+            selection,
+            selectionArgs
+        )
     }
 
-    fun updateTodoItem(oldItem: TodoListItem, newItem: TodoListItem) {
-        //TODO implement it
+    fun updateCheckStatus(oldItem: TodoListItem, isChecked: Boolean) {
+        val db = db.writableDatabase
+
+        // New value for one column
+        val updatedChecked = if (isChecked) TodoItemContract.TodoItem.ITEM_CHECKED else TodoItemContract.TodoItem.ITEM_UNCHECKED
+        val values = ContentValues().apply {
+            put(TodoItemContract.TodoItem.COLUMN_NAME_IS_CHECKED, updatedChecked)
+        }
+
+        // Which row to update, based on the title
+        val selection = "${TodoItemContract.TodoItem.COLUMN_NAME_TITLE} LIKE ?"
+        val selectionArgs = arrayOf(oldItem.title)
+        val count = db.update(
+            TodoItemContract.TodoItem.TABLE_NAME,
+            values,
+            selection,
+            selectionArgs)
     }
 
 
