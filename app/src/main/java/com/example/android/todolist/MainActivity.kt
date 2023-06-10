@@ -7,6 +7,8 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android.todolist.DataBase.TodoListItem
+import com.example.android.todolist.DataBase.TodoItemsStore
 import com.example.android.todolist.R.id.Edit_tittle
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val store = TodoItemsStore(this)
         todoAdapter = TodoAdapter(mutableListOf())
 
 
@@ -33,10 +36,16 @@ class MainActivity : AppCompatActivity() {
                 val todo = Todo(todoTitle)
                 todoAdapter.addTodo(todo)
                 Edit_tittle.text.clear()
+                store.StoreTodoItem(TodoListItem(tittle = todoTitle , 0))
             }
+
         }
         Del_button.setOnClickListener {
             todoAdapter.deleteDoneTodo()
+        }
+        val allItems = store.queryAlldata()
+        for (item in allItems) {
+            todoAdapter.addTodo(Todo(item.tittle))
         }
 
     }
