@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 class TodoAdapter(
-    private val todos : MutableList<Todo>
+    private val todos : MutableList<Todo>,
+    private val Store_Checked: (Tittle:String, ischecked : Boolean)-> Unit
 
 ) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder> (){
     class TodoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -59,6 +60,7 @@ class TodoAdapter(
             cbDone.setOnCheckedChangeListener { _, isChecked ->
                 toggleStikeThrough(tvTodoTittle, isChecked)
                 curTodo.ischecked = !curTodo.ischecked
+                Store_Checked(curTodo.tittle,isChecked)
             }
 
         }

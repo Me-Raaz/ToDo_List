@@ -6,6 +6,7 @@ import android.icu.text.CaseMap.Title
 import android.provider.BaseColumns
 import com.example.android.todolist.MainActivity
 import com.example.android.todolist.TodoAdapter
+import java.lang.Exception
 
 
 class TodoItemsStore(private val context: Context) {
@@ -13,10 +14,13 @@ class TodoItemsStore(private val context: Context) {
     private val db = FeedReaderDbHelper(context)
     private val dbReadable = db.readableDatabase
 
+    fun StoreTodoItem(item: TodoListItem) {
+
+        val db = db.writableDatabase
 
 
-/*
 
+    /*
     fun store() {
         val tableName = FeedReaderContract.FeedEntry.TABLE_NAME
         val titlekey =FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE
@@ -24,28 +28,10 @@ class TodoItemsStore(private val context: Context) {
 
         val sqlDataEntry = "INSERT INTO $tableName ($titlekey, $isCheckedkey) VALUES (\'Hello\',\'0\' );"
 
-        db.writableDatabase.execSQL(
-            sqlDataEntry
-        )
+        db.writableDatabase.execSQL(sqlDataEntry)
     }
-*/
-
-
-
-    fun StoreTodoItem(item: TodoListItem) {
-
-        val db = db.writableDatabase
-
-
-    /*
-        //SQL command For JAVA.....................
-        //SQL command For JAVA.....................
-        //SQL command For JAVA.....................
-        //SQL command For JAVA.....................
-        //SQL command For JAVA.....................
-        //SQL command For JAVA.....................
     */
-
+        //SQL command For JAVA.....................
         val values = ContentValues().apply {
             put(FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE, item.tittle)
             put(FeedReaderContract.FeedEntry.COLUMN_NAME_IsChecked, item.Ischecked)
@@ -89,34 +75,30 @@ class TodoItemsStore(private val context: Context) {
         return itemIds
     }
 
+    fun deleteCompleteItem() {
+        val db = db.writableDatabase
+        val IsTicked = FeedReaderContract.IsTicked
 
-    fun deleteTodoItem(item: TodoListItem) {
-/*
-    fun delete(){
-        val tableName = FeedReaderContract.FeedEntry.TABLE_NAME
-        val titlekey =FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE
+        val selection = "${FeedReaderContract.FeedEntry.COLUMN_NAME_IsChecked} LIKE ?"
+        val selectionArgs = arrayOf("$IsTicked")
+        val deletedRows = db.delete(FeedReaderContract.FeedEntry.TABLE_NAME, selection, selectionArgs)
 
-
-        val sqlDataEntry = "DELETE FROM $tableName WHERE $titlekey=\'null\';"
-        db.writableDatabase.execSQL(
-            sqlDataEntry
-        )
     }
-*/
+
+    fun updateTodoItem(Tittle: String, IsTicked :Boolean ) {
 
         val db = db.writableDatabase
-        // Define 'where' part of query.
-        val selection = "${FeedReaderContract.FeedEntry.COLUMN_NAME_IsChecked} LIKE ?"
-        // Specify arguments in placeholder order.
-        val selectionArgs = arrayOf("MyTitle")
+        val UpdateTick = if (IsTicked) FeedReaderContract.IsTicked else FeedReaderContract.Is_Not_Ticked   //This code Says That if Ticked then Store Tick else Not
 
-
-        val deletedRows = db.delete(FeedReaderContract.FeedEntry.TABLE_NAME,selection,selectionArgs)
+        val values = ContentValues().apply {
+            put(FeedReaderContract.FeedEntry.COLUMN_NAME_IsChecked, UpdateTick)
+        }
+        val selection = "${FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE} LIKE ?"    // Take the Tiitle Column for Which I have To Ticked
+        val selectionArgs = arrayOf(Tittle)               // Which title Value i have to Change
+        val count = db.update(
+            FeedReaderContract.FeedEntry.TABLE_NAME,
+            values,
+            selection,
+            selectionArgs)
     }
-
-    fun updateTodoItem(oldItem: TodoListItem, newItem: TodoListItem) {
-        //TODO implement it
-    }
-
-
 }

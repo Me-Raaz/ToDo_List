@@ -18,4 +18,7 @@ object FeedReaderContract {
                 "${FeedEntry.COLUMN_NAME_IsChecked} Int)"
 
     const val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS ${FeedEntry.TABLE_NAME}"
+
+    const val IsTicked = 1
+    const val Is_Not_Ticked = 0
 }

@@ -14,7 +14,6 @@ class FeedReaderDbHelper(context: Context):
         DATABASE_VERSION
     ){
 
-
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(SQL_CREATE_ENTRIES)
     }
@@ -25,7 +24,6 @@ class FeedReaderDbHelper(context: Context):
     override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         onUpgrade(db, oldVersion, newVersion)
     }
-
 
     companion object {
         // If you change the database schema, you must increment the database version.

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TodoList</string>
+    <string name="action_favorite">Mark Favorite</string>
+    <string name="action_settings">\n\n</string>
 </resources>
